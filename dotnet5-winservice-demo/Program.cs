@@ -33,12 +33,12 @@ namespace dotnet5_winservice_demo
                     // The ILoggingBuilder minimum level determines the
                     // the lowest possible level for logging. The log4net
                     // level then sets the level that we actually log at.
-                    logging.AddLog4Net();
-                    logging.SetMinimumLevel(LogLevel.Debug);
+                    logging.AddLog4Net(); //添加log4net
+                    logging.SetMinimumLevel(LogLevel.Debug); //设置最低级别为Debug
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<Worker>(); //每添加一个托管服务类，都需要在此处添加配置。
                 });
-    }
+            }
 }
