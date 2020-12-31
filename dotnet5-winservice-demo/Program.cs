@@ -38,6 +38,10 @@ namespace dotnet5_winservice_demo
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
+                    //services.Configure<HostedServiceOptions>(options =>
+                    //{
+                    //    options.WorkerInterval = 1000 * 60; //设置托管任务默认轮询时间为1分钟。
+                    //});
                     services.AddHostedService<Worker>(); //每添加一个托管服务类，都需要在此处添加配置。
                 });
             }
