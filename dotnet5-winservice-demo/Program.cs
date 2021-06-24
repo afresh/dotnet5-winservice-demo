@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System.IO;
 using System.Reflection;
 using System.Xml;
+using dotnet5_winservice_demo.Containers.WebApiContainers;
 
 namespace dotnet5_winservice_demo
 {
@@ -42,6 +43,7 @@ namespace dotnet5_winservice_demo
                     //{
                     //    options.WorkerInterval = 1000 * 60; //设置托管任务默认轮询时间为1分钟。
                     //});
+                    services.AddTransient<IUserContainer, UserContainer>(); //配置依赖注入关系
                     services.AddHostedService<Worker>(); //每添加一个托管服务类，都需要在此处添加配置。
                 });
             }

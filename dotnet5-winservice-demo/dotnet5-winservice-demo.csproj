@@ -12,4 +12,12 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="5.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="5.0.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Containers\WebApiContainers\Dto\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\dotnet5-winservice-demo.Utility\dotnet5-winservice-demo.Utility.csproj" />
+  </ItemGroup>
 </Project>

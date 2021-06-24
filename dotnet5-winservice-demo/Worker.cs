@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using dotnet5_winservice_demo.Containers.WebApiContainers;
 
 namespace dotnet5_winservice_demo
 {
@@ -15,15 +16,17 @@ namespace dotnet5_winservice_demo
     {
         private readonly ILogger<Worker> _logger;
         private readonly IConfiguration _configuration;
+        private readonly IUserContainer _userContainer;
 
         private static HttpListener _httpListener; //声明一个静态的监听器
 
         public HostedServiceOptions HostedServiceOptions { get; private set; }
 
-        public Worker(ILogger<Worker> logger, IConfiguration configuration)
+        public Worker(ILogger<Worker> logger, IConfiguration configuration, IUserContainer userContainer)
         {
             _logger = logger;
             _configuration = configuration; //依赖注入IConfiguration
+            _userContainer = userContainer; //依赖注入IUserContainer
         }
 
         public override async Task StartAsync(CancellationToken cancellationToken)
@@ -179,10 +182,8 @@ namespace dotnet5_winservice_demo
                                 response.StatusCode = 404;
                                 response.OutputStream.Close();
                                 return;
-                            case "/api/gethelloworld":
-                                response.StatusCode = 200;
-                                response.OutputStream.Write(Encoding.UTF8.GetBytes("Hello world!"));
-                                response.OutputStream.Close();
+                            case "/api/currentuser": //获取当前用户信息
+                                _userContainer.GetCurrentUser(request, response);
                                 break;
                         }
                         return;
@@ -275,6 +276,9 @@ namespace dotnet5_winservice_demo
                                 response.StatusCode = 404;
                                 response.OutputStream.Close();
                                 return;
+                            case "/api/login/account": //登录
+                                _userContainer.LoginAccount(request, response);
+                                break;
                         }
                         return;
                     }
